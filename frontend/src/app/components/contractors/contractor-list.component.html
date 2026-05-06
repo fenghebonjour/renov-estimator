@@ -1,0 +1,38 @@
+<div class="page">
+  <div class="page-header">
+    <h1>Contractors</h1>
+    <span class="count" *ngIf="!loading">{{ contractors.length }} contractor(s)</span>
+    <a routerLink="/contractors/new" class="btn-primary" style="margin-left:auto">+ New Contractor</a>
+  </div>
+
+  <div class="loading" *ngIf="loading">Loading...</div>
+  <div class="error" *ngIf="error">{{ error }}</div>
+
+  <table class="data-table" *ngIf="!loading && !error">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Specialty</th>
+        <th>Experience</th>
+        <th>Rating</th>
+        <th>Offers Submitted</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let c of contractors" (click)="goTo(c.id)" class="clickable">
+        <td class="id-cell">{{ c.id }}</td>
+        <td><strong>{{ displayName(c) }}</strong></td>
+        <td><span class="badge badge-gray">{{ c.type }}</span></td>
+        <td>{{ c.specialty }}</td>
+        <td>{{ c.yearsOfExperience }} yr(s)</td>
+        <td>{{ c.rating }}/10</td>
+        <td class="center">{{ c.serviceOffers?.length || 0 }}</td>
+      </tr>
+      <tr *ngIf="contractors.length === 0">
+        <td colspan="7" class="empty">No contractors found.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

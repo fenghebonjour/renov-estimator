@@ -1,0 +1,36 @@
+<div class="page">
+  <div class="page-header">
+    <h1>Clients</h1>
+    <span class="count" *ngIf="!loading">{{ clients.length }} client(s)</span>
+    <a routerLink="/clients/new" class="btn-primary" style="margin-left:auto">+ New Client</a>
+  </div>
+
+  <div class="loading" *ngIf="loading">Loading...</div>
+  <div class="error" *ngIf="error">{{ error }}</div>
+
+  <table class="data-table" *ngIf="!loading && !error">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Last Name</th>
+        <th>First Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Project Bids</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let client of clients" (click)="goTo(client.id)" class="clickable">
+        <td class="id-cell">{{ client.id }}</td>
+        <td><strong>{{ client.lastName }}</strong></td>
+        <td>{{ client.firstName }}</td>
+        <td>{{ client.email }}</td>
+        <td>{{ client.phone }}</td>
+        <td class="center">{{ client.projectBids?.length || 0 }}</td>
+      </tr>
+      <tr *ngIf="clients.length === 0">
+        <td colspan="6" class="empty">No clients found.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

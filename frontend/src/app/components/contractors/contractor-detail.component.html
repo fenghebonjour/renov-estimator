@@ -1,0 +1,85 @@
+<div class="page">
+  <div class="breadcrumb">
+    <a routerLink="/contractors">Contractors</a>
+    <span> / </span>
+    <span>{{ contractor ? displayName(contractor) : '...' }}</span>
+  </div>
+
+  <div class="loading" *ngIf="loading">Loading...</div>
+  <div class="error" *ngIf="error">{{ error }}</div>
+
+  <ng-container *ngIf="contractor">
+    <div class="card">
+      <div class="card-header">
+        <div class="title-row">
+          <h2>{{ displayName(contractor) }}</h2>
+          <span class="badge badge-gray">{{ contractor.type }}</span>
+        </div>
+      </div>
+      <div class="info-grid">
+        <div class="info-item">
+          <label>Specialty</label>
+          <span>{{ contractor.specialty }}</span>
+        </div>
+        <div class="info-item">
+          <label>Email</label>
+          <span>{{ contractor.email }}</span>
+        </div>
+        <div class="info-item">
+          <label>Phone</label>
+          <span>{{ contractor.phone }}</span>
+        </div>
+        <div class="info-item">
+          <label>Years of Experience</label>
+          <span>{{ contractor.yearsOfExperience }} yr(s)</span>
+        </div>
+        <div class="info-item">
+          <label>Rating</label>
+          <span>{{ contractor.rating }}&nbsp;/&nbsp;10</span>
+        </div>
+        <div class="info-item" *ngIf="isIndividual(contractor) && contractor.certification">
+          <label>Certification</label>
+          <span>{{ contractor.certification }}</span>
+        </div>
+        <div class="info-item" *ngIf="!isIndividual(contractor) && contractor.contactPerson">
+          <label>Contact Person</label>
+          <span>{{ contractor.contactPerson }}</span>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="section-title">
+      Service Offers Submitted
+      <span class="count">{{ contractor.serviceOffers?.length || 0 }}</span>
+    </h3>
+
+    <div class="empty-state" *ngIf="!contractor.serviceOffers?.length">
+      No offers submitted by this contractor.
+    </div>
+
+    <table class="data-table" *ngIf="contractor.serviceOffers?.length">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Status</th>
+          <th>Offer Date</th>
+          <th>Valid Until</th>
+          <th class="right">Amount</th>
+          <th class="center">Materials</th>
+          <th class="center">Labor</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let offer of contractor.serviceOffers">
+          <td class="id-cell">{{ offer.id }}</td>
+          <td><span class="badge badge-blue">{{ offer.status }}</span></td>
+          <td>{{ offer.offerDate }}</td>
+          <td>{{ offer.validUntil }}</td>
+          <td class="right amount">{{ offer.amount | number:'1.2-2' }}&nbsp;$</td>
+          <td class="center">{{ offer.materials?.length || 0 }} line(s)</td>
+          <td class="center">{{ offer.laborItems?.length || 0 }} line(s)</td>
+        </tr>
+      </tbody>
+    </table>
+  </ng-container>
+</div>

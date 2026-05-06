@@ -1,0 +1,4 @@
+[ZoneTransfer]
+ZoneId=2
+ReferrerUrl=http://localhost:9595/mysql/db_export.php?db=renovdb&token=0e0f03e23a09d51e4e9bedf2ca14ebe0
+HostUrl=http://localhost:9595/mysql/export.php

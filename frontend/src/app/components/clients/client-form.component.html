@@ -1,0 +1,60 @@
+<div class="page">
+  <div class="breadcrumb">
+    <a routerLink="/clients">Clients</a>
+    <span> / </span>
+    <span>{{ isEdit ? 'Edit' : 'New Client' }}</span>
+  </div>
+
+  <div class="form-card">
+    <h2>{{ isEdit ? 'Edit Client' : 'New Client' }}</h2>
+    <div class="error" *ngIf="error">{{ error }}</div>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="form-row">
+        <div class="form-group">
+          <label>First Name *</label>
+          <input type="text" formControlName="firstName" [class.invalid]="isInvalid('firstName')" placeholder="First name">
+          <span class="error-msg" *ngIf="isInvalid('firstName')">Required field.</span>
+        </div>
+        <div class="form-group">
+          <label>Last Name *</label>
+          <input type="text" formControlName="lastName" [class.invalid]="isInvalid('lastName')" placeholder="Last name">
+          <span class="error-msg" *ngIf="isInvalid('lastName')">Required field.</span>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Email *</label>
+          <input type="email" formControlName="email" [class.invalid]="isInvalid('email')" placeholder="email@example.com">
+          <span class="error-msg" *ngIf="isInvalid('email')">Invalid email.</span>
+        </div>
+        <div class="form-group">
+          <label>Phone *</label>
+          <input type="text" formControlName="phone" [class.invalid]="isInvalid('phone')" placeholder="514 555-5555">
+          <span class="error-msg" *ngIf="isInvalid('phone')">Required field.</span>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Username *</label>
+          <input type="text" formControlName="username" [class.invalid]="isInvalid('username')" placeholder="username">
+          <span class="error-msg" *ngIf="isInvalid('username')">Required field.</span>
+        </div>
+        <div class="form-group">
+          <label>Password *</label>
+          <input type="password" formControlName="password" [class.invalid]="isInvalid('password')" placeholder="••••••••">
+          <span class="error-msg" *ngIf="isInvalid('password')">Required field.</span>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn-primary" [disabled]="saving">
+          {{ saving ? 'Saving...' : (isEdit ? 'Update' : 'Create Client') }}
+        </button>
+        <a routerLink="/clients" class="btn-cancel">Cancel</a>
+      </div>
+    </form>
+  </div>
+</div>

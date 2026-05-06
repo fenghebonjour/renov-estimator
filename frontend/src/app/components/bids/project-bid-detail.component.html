@@ -1,0 +1,120 @@
+<div class="page">
+  <div class="breadcrumb">
+    <a routerLink="/bids">Project Bids</a>
+    <span> / </span>
+    <span>Bid #{{ bid?.id }}</span>
+  </div>
+
+  <div class="loading" *ngIf="loading">Loading...</div>
+  <div class="error" *ngIf="error">{{ error }}</div>
+
+  <ng-container *ngIf="bid">
+    <div class="card">
+      <div class="card-header">
+        <div class="title-row">
+          <h2>{{ bid.type }}</h2>
+          <span class="badge" [ngClass]="statusClass(bid.status)">{{ bid.status }}</span>
+        </div>
+      </div>
+      <div class="info-grid">
+        <div class="info-item">
+          <label>Request Date</label>
+          <span>{{ bid.requestDate }}</span>
+        </div>
+        <div class="info-item">
+          <label>Submission Deadline</label>
+          <span>{{ bid.deadline }}</span>
+        </div>
+        <div class="info-item">
+          <label>Work Start</label>
+          <span>{{ bid.workStartDate }}</span>
+        </div>
+        <div class="info-item">
+          <label>Work End</label>
+          <span>{{ bid.workEndDate }}</span>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="section-title">
+      Service Offers Received
+      <span class="count">{{ bid.serviceOffers?.length || 0 }}</span>
+      <a [routerLink]="['/bids', bid.id, 'offers', 'new']" class="btn-primary" style="margin-left:auto;font-size:0.82rem">+ Submit Offer</a>
+    </h3>
+
+    <div class="empty-state" *ngIf="!bid.serviceOffers?.length">
+      No offers received for this bid.
+    </div>
+
+    <div class="offer-card" *ngFor="let offer of bid.serviceOffers">
+      <div class="offer-header">
+        <div class="offer-id">
+          Offer&nbsp;#{{ offer.id }}
+          <span class="badge badge-blue">{{ offer.status }}</span>
+        </div>
+        <div class="offer-total">{{ offer.amount | number:'1.2-2' }}&nbsp;$</div>
+      </div>
+
+      <div class="offer-dates">
+        <span>Offer Date&nbsp;: <strong>{{ offer.offerDate }}</strong></span>
+        <span>Valid Until&nbsp;: <strong>{{ offer.validUntil }}</strong></span>
+      </div>
+
+      <div class="offer-breakdown" *ngIf="offer.materials?.length">
+        <h4>Materials</h4>
+        <table class="inner-table">
+          <thead>
+            <tr>
+              <th>Description</th>
+              <th class="right">Catalogue Price</th>
+              <th class="right">Qty</th>
+              <th class="right">Offered Price</th>
+              <th class="right">Subtotal</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let m of offer.materials">
+              <td>{{ m.material.description }}</td>
+              <td class="right">{{ m.material.unitPrice | number:'1.2-2' }}&nbsp;$</td>
+              <td class="right">{{ m.quantity }}</td>
+              <td class="right">{{ m.unitPrice | number:'1.2-2' }}&nbsp;$</td>
+              <td class="right subtotal">{{ m.quantity * m.unitPrice | number:'1.2-2' }}&nbsp;$</td>
+            </tr>
+            <tr class="total-row">
+              <td colspan="4" class="right">Materials Total</td>
+              <td class="right">{{ totalMaterials(offer) | number:'1.2-2' }}&nbsp;$</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="offer-breakdown" *ngIf="offer.laborItems?.length">
+        <h4>Labor</h4>
+        <table class="inner-table">
+          <thead>
+            <tr>
+              <th>Description</th>
+              <th class="right">Grade</th>
+              <th class="right">Hours</th>
+              <th class="right">Hourly Rate</th>
+              <th class="right">Subtotal</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let l of offer.laborItems">
+              <td>{{ l.labor.description }}</td>
+              <td class="right">{{ l.labor.grade }}</td>
+              <td class="right">{{ l.quantity }}</td>
+              <td class="right">{{ l.unitPrice | number:'1.2-2' }}&nbsp;$</td>
+              <td class="right subtotal">{{ l.quantity * l.unitPrice | number:'1.2-2' }}&nbsp;$</td>
+            </tr>
+            <tr class="total-row">
+              <td colspan="4" class="right">Labor Total</td>
+              <td class="right">{{ totalLabor(offer) | number:'1.2-2' }}&nbsp;$</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </ng-container>
+</div>

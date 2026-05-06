@@ -1,0 +1,105 @@
+<div class="page">
+  <div class="breadcrumb">
+    <a routerLink="/contractors">Contractors</a>
+    <span> / </span>
+    <span>New Contractor</span>
+  </div>
+
+  <div class="form-card">
+    <h2>New Contractor</h2>
+    <div class="error" *ngIf="error">{{ error }}</div>
+
+    <div class="type-toggle">
+      <button type="button"
+        [class.active]="contractorType === 'Individual'"
+        (click)="setType('Individual')">Individual</button>
+      <button type="button"
+        [class.active]="contractorType === 'Company'"
+        (click)="setType('Company')">Company</button>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+      <div class="form-row" *ngIf="contractorType === 'Individual'">
+        <div class="form-group">
+          <label>First Name *</label>
+          <input type="text" formControlName="firstName" [class.invalid]="isInvalid('firstName')" placeholder="First name">
+          <span class="error-msg" *ngIf="isInvalid('firstName')">Required field.</span>
+        </div>
+        <div class="form-group">
+          <label>Last Name *</label>
+          <input type="text" formControlName="lastName" [class.invalid]="isInvalid('lastName')" placeholder="Last name">
+          <span class="error-msg" *ngIf="isInvalid('lastName')">Required field.</span>
+        </div>
+      </div>
+
+      <div class="form-group" *ngIf="contractorType === 'Company'">
+        <label>Company Name *</label>
+        <input type="text" formControlName="name" [class.invalid]="isInvalid('name')" placeholder="Company name">
+        <span class="error-msg" *ngIf="isInvalid('name')">Required field.</span>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Email *</label>
+          <input type="email" formControlName="email" [class.invalid]="isInvalid('email')" placeholder="email@example.com">
+          <span class="error-msg" *ngIf="isInvalid('email')">Invalid email.</span>
+        </div>
+        <div class="form-group">
+          <label>Phone *</label>
+          <input type="text" formControlName="phone" [class.invalid]="isInvalid('phone')" placeholder="514 555-5555">
+          <span class="error-msg" *ngIf="isInvalid('phone')">Required field.</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Specialty *</label>
+        <input type="text" formControlName="specialty" [class.invalid]="isInvalid('specialty')" placeholder="e.g. Painting, Electrical...">
+        <span class="error-msg" *ngIf="isInvalid('specialty')">Required field.</span>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Years of Experience *</label>
+          <input type="number" formControlName="yearsOfExperience" [class.invalid]="isInvalid('yearsOfExperience')" min="0">
+          <span class="error-msg" *ngIf="isInvalid('yearsOfExperience')">Invalid value.</span>
+        </div>
+        <div class="form-group">
+          <label>Rating (0–10) *</label>
+          <input type="number" formControlName="rating" [class.invalid]="isInvalid('rating')" min="0" max="10">
+          <span class="error-msg" *ngIf="isInvalid('rating')">Value between 0 and 10.</span>
+        </div>
+      </div>
+
+      <div class="form-group" *ngIf="contractorType === 'Individual'">
+        <label>Certification</label>
+        <input type="text" formControlName="certification" placeholder="Certification number or title">
+      </div>
+
+      <div class="form-group" *ngIf="contractorType === 'Company'">
+        <label>Contact Person</label>
+        <input type="text" formControlName="contactPerson" placeholder="Primary contact name">
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Username *</label>
+          <input type="text" formControlName="username" [class.invalid]="isInvalid('username')" placeholder="username">
+          <span class="error-msg" *ngIf="isInvalid('username')">Required field.</span>
+        </div>
+        <div class="form-group">
+          <label>Password *</label>
+          <input type="password" formControlName="password" [class.invalid]="isInvalid('password')" placeholder="••••••••">
+          <span class="error-msg" *ngIf="isInvalid('password')">Required field.</span>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn-primary" [disabled]="saving">
+          {{ saving ? 'Saving...' : 'Create Contractor' }}
+        </button>
+        <a routerLink="/contractors" class="btn-cancel">Cancel</a>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,64 @@
+<div class="page">
+  <div class="breadcrumb">
+    <a routerLink="/bids">Project Bids</a>
+    <span> / </span>
+    <a [routerLink]="['/bids', bidId]">Bid #{{ bidId }}</a>
+    <span> / </span>
+    <span>Submit Offer</span>
+  </div>
+
+  <div class="form-card">
+    <h2>Submit a Service Offer</h2>
+    <div class="error" *ngIf="error">{{ error }}</div>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label>Contractor *</label>
+        <select formControlName="contractorId" [class.invalid]="isInvalid('contractorId')">
+          <option value="">-- Select a contractor --</option>
+          <option *ngFor="let c of contractors" [value]="c.id">
+            {{ displayName(c) }} ({{ c.specialty }})
+          </option>
+        </select>
+        <span class="error-msg" *ngIf="isInvalid('contractorId')">Required field.</span>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Offer Date *</label>
+          <input type="date" formControlName="offerDate" [class.invalid]="isInvalid('offerDate')">
+          <span class="error-msg" *ngIf="isInvalid('offerDate')">Required field.</span>
+        </div>
+        <div class="form-group">
+          <label>Valid Until *</label>
+          <input type="date" formControlName="validUntil" [class.invalid]="isInvalid('validUntil')">
+          <span class="error-msg" *ngIf="isInvalid('validUntil')">Required field.</span>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Amount ($) *</label>
+          <input type="number" formControlName="amount" [class.invalid]="isInvalid('amount')" min="0" step="0.01" placeholder="0.00">
+          <span class="error-msg" *ngIf="isInvalid('amount')">Invalid amount.</span>
+        </div>
+        <div class="form-group">
+          <label>Status</label>
+          <select formControlName="status">
+            <option value="created">Created</option>
+            <option value="submitted">Submitted</option>
+            <option value="accepted">Accepted</option>
+            <option value="rejected">Rejected</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn-primary" [disabled]="saving || loadingContractors">
+          {{ saving ? 'Saving...' : 'Submit Offer' }}
+        </button>
+        <a [routerLink]="['/bids', bidId]" class="btn-cancel">Cancel</a>
+      </div>
+    </form>
+  </div>
+</div>

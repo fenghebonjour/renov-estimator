@@ -1,0 +1,84 @@
+<div class="page">
+  <div class="breadcrumb">
+    <a routerLink="/clients">Clients</a>
+    <span> / </span>
+    <span>{{ client?.firstName }} {{ client?.lastName }}</span>
+  </div>
+
+  <div class="loading" *ngIf="loading">Loading...</div>
+  <div class="error" *ngIf="error">{{ error }}</div>
+
+  <ng-container *ngIf="client">
+    <div class="card">
+      <div class="card-header" style="display:flex;justify-content:space-between;align-items:flex-start">
+        <h2>{{ client.firstName }} {{ client.lastName }}</h2>
+        <a [routerLink]="['/clients', client.id, 'edit']" class="btn-secondary">Edit</a>
+      </div>
+      <div class="info-grid">
+        <div class="info-item">
+          <label>Username</label>
+          <span>{{ client.username }}</span>
+        </div>
+        <div class="info-item">
+          <label>Email</label>
+          <span>{{ client.email }}</span>
+        </div>
+        <div class="info-item">
+          <label>Phone</label>
+          <span>{{ client.phone }}</span>
+        </div>
+        <div class="info-item">
+          <label>Registration Date</label>
+          <span>{{ client.registrationDate }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" *ngIf="client.addresses?.length">
+      <h3>Addresses</h3>
+      <div class="address-list">
+        <div class="address-item" *ngFor="let ua of client.addresses">
+          <span class="badge badge-blue address-type">{{ ua.addressType }}</span>
+          <span>
+            {{ ua.address.streetNumber }}, apt.&nbsp;{{ ua.address.unit }}&nbsp;
+            {{ ua.address.street }}, {{ ua.address.city }}&nbsp;({{ ua.address.province }}),
+            {{ ua.address.postalCode }}, {{ ua.address.country }}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="section-title">
+      Project Bids
+      <span class="count">{{ client.projectBids?.length || 0 }}</span>
+      <a [routerLink]="['/clients', client.id, 'bids', 'new']" class="btn-primary" style="margin-left:auto;font-size:0.82rem">+ Add Bid</a>
+    </h3>
+
+    <div class="empty-state" *ngIf="!client.projectBids?.length">
+      No project bids for this client.
+    </div>
+
+    <table class="data-table" *ngIf="client.projectBids?.length">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Type</th>
+          <th>Status</th>
+          <th>Request Date</th>
+          <th>Deadline</th>
+          <th>Offers Received</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let bid of client.projectBids" (click)="goToBid(bid.id)" class="clickable">
+          <td class="id-cell">{{ bid.id }}</td>
+          <td><strong>{{ bid.type }}</strong></td>
+          <td><span class="badge" [ngClass]="statusClass(bid.status)">{{ bid.status }}</span></td>
+          <td>{{ bid.requestDate }}</td>
+          <td>{{ bid.deadline }}</td>
+          <td class="center">{{ bid.serviceOffers?.length || 0 }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </ng-container>
+</div>

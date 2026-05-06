@@ -1,0 +1,39 @@
+<div class="page">
+  <div class="page-header">
+    <h1>Project Bids</h1>
+    <span class="count" *ngIf="!loading">{{ bids.length }} bid(s)</span>
+  </div>
+
+  <div class="loading" *ngIf="loading">Loading...</div>
+  <div class="error" *ngIf="error">{{ error }}</div>
+
+  <table class="data-table" *ngIf="!loading && !error">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Work Type</th>
+        <th>Status</th>
+        <th>Request Date</th>
+        <th>Deadline</th>
+        <th>Work Start</th>
+        <th>Work End</th>
+        <th>Offers Received</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let bid of bids" (click)="goTo(bid.id)" class="clickable">
+        <td class="id-cell">{{ bid.id }}</td>
+        <td><strong>{{ bid.type }}</strong></td>
+        <td><span class="badge" [ngClass]="statusClass(bid.status)">{{ bid.status }}</span></td>
+        <td>{{ bid.requestDate }}</td>
+        <td>{{ bid.deadline }}</td>
+        <td>{{ bid.workStartDate }}</td>
+        <td>{{ bid.workEndDate }}</td>
+        <td class="center">{{ bid.serviceOffers?.length || 0 }}</td>
+      </tr>
+      <tr *ngIf="bids.length === 0">
+        <td colspan="8" class="empty">No project bids found.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

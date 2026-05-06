@@ -1,0 +1,17 @@
+# Maven
+backend/target/
+backend/.mvn/wrapper/maven-wrapper.jar
+*.class
+
+# Node / Angular
+frontend/node_modules/
+frontend/dist/
+frontend/.angular/
+
+# Docker
+**/.env
+
+# IDE
+.idea/
+*.iml
+.vscode/

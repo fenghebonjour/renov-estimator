@@ -1,0 +1,53 @@
+<div class="page">
+  <div class="breadcrumb">
+    <a routerLink="/clients">Clients</a>
+    <span> / </span>
+    <a [routerLink]="['/clients', clientId]">{{ clientName }}</a>
+    <span> / </span>
+    <span>New Project Bid</span>
+  </div>
+
+  <div class="form-card">
+    <h2>New Project Bid</h2>
+    <div class="error" *ngIf="error">{{ error }}</div>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label>Work Type *</label>
+        <select formControlName="type" [class.invalid]="isInvalid('type')">
+          <option value="">-- Select --</option>
+          <option *ngFor="let t of types" [value]="t">{{ t }}</option>
+        </select>
+        <span class="error-msg" *ngIf="isInvalid('type')">Required field.</span>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Submission Deadline *</label>
+          <input type="date" formControlName="deadline" [class.invalid]="isInvalid('deadline')">
+          <span class="error-msg" *ngIf="isInvalid('deadline')">Required field.</span>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Work Start Date *</label>
+          <input type="date" formControlName="workStartDate" [class.invalid]="isInvalid('workStartDate')">
+          <span class="error-msg" *ngIf="isInvalid('workStartDate')">Required field.</span>
+        </div>
+        <div class="form-group">
+          <label>Work End Date *</label>
+          <input type="date" formControlName="workEndDate" [class.invalid]="isInvalid('workEndDate')">
+          <span class="error-msg" *ngIf="isInvalid('workEndDate')">Required field.</span>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn-primary" [disabled]="saving">
+          {{ saving ? 'Saving...' : 'Create Bid' }}
+        </button>
+        <a [routerLink]="['/clients', clientId]" class="btn-cancel">Cancel</a>
+      </div>
+    </form>
+  </div>
+</div>
