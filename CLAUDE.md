@@ -1,75 +1,50 @@
-# CLAUDE.md
+# EstimateurReno
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+Connects clients with renovation contractors. Clients post project bids; contractors respond with service offers priced by materials and labour line items.
 
-## Project Overview
+Stack: Spring Boot 2.5.4 / Java 11 / MySQL 5.7 / Angular 12 / Docker Compose.
 
-EstimateurReno is a Java Spring Boot REST API (v2.0) that connects clients with contractors for real estate renovation projects. An Angular frontend at `http://localhost:4200` consumes this API.
-
-## Commands
-
-All commands run from `backend/`:
+## Running
 
 ```bash
-# Run the application
-./mvnw spring-boot:run
-
-# Build
-./mvnw clean package
-
-# Run all tests
-./mvnw test
-
-# Run a single test class
-./mvnw test -Dtest=RenovApplicationTests
+docker compose up --build          # full stack; frontend :4200, API :8080
+cd backend && ./mvnw spring-boot:run   # backend only (needs local MySQL)
+cd frontend && ng serve            # frontend only
 ```
 
-No linting tool is configured.
+No linting configured on either side.
 
-## Architecture
+## Domain model
 
-### Layered structure
-`model/` → `repo/` → `service/` → `controlleur/` — standard Spring Boot layers. Custom exceptions in `exception/`.
+User hierarchy uses **JPA JOINED inheritance** — one table per subclass:
 
-### Domain model
-
-**User hierarchy** (JPA `JOINED` inheritance):
-- `Utilisateur` (base): username, password, registration date, user type
-  - `Client`: has `AppelDOffre` (renovation bids/calls-for-proposals)
-  - `Contracteur` (abstract): rating, experience, activity
-    - `Individus` (individual contractor)
-    - `Entreprise` (enterprise contractor)
-    - Both have `OffreService` (service offers)
-
-**Bidding flow:**
-1. A `Client` creates an `AppelDOffre` (call for proposals) with a category, deadline, and completion date
-2. A `Contracteur` responds with an `OffreService` linked to that appeal
-3. Each `OffreService` is composed of `OdsMateriaux` (materials line items) and `OdsMainOeuvre` (labour line items)
-4. `Materiaux` and `MainOeuvre` are catalog entities referenced via composite-key join tables
-
-**Address management:** `AdresseUtilisateur` is a join table between `Utilisateur` and `Adresse` with a relationship-type field and composite key `AdresseUtilisateurId`.
-
-### Key conventions
-
-- **French naming throughout**: all classes, fields, and endpoints use French (e.g., `Contracteur`, `AppelDOffre`, `OffreService`, `controlleur/`)
-- **Composite keys via `@EmbeddedId`** for many-to-many join tables (`AdresseUtilisateurId`, `OdsMateriauxId`, `OdsMainOeuvreId`)
-- **Bidirectional JSON**: `@JsonManagedReference` / `@JsonBackReference` on all bidirectional relationships to prevent infinite serialization loops
-- **Lazy loading**: `OffreService` relationships use `FetchType.LAZY`
-- **Cascade**: `CascadeType.ALL` on contractor→offers; `CascadeType.PERSIST, REMOVE` on user→addresses
-
-### Database
-
-MySQL on `localhost:3306/renovdb` (user: `root`, password: `root`). `ddl-auto = create-drop` — **the schema is dropped and recreated on every startup**. `RenovApplication.java` contains a `CommandLineRunner` that seeds sample data (clients, contractors, offers) at startup.
-
-### REST API pattern
-
-Controllers follow this naming pattern:
 ```
-GET    /{entity}/all
-GET    /{entity}/find/{id}
-POST   /{entity}/add
-PUT    /{entity}/update
-DELETE /{entity}/delete/{id}
+User (app_user)
+  Client (client)               — lastName, firstName, email, phone
+  Contractor (contractor, abstract) — rating, yearsOfExperience, specialty
+    Individual (individual)     — lastName, firstName, certification
+    Company (company)           — name, contactPerson
 ```
 
-CORS is configured for `http://localhost:4200` with credentials allowed.
+Bidding flow: `Client → ProjectBid → ServiceOffer → BidMaterial → Material`  
+                                                  `→ BidLabor    → Labor`
+
+`UserAddress`, `BidMaterial`, `BidLabor` are composite-key join tables (`@EmbeddedId`); `BidMaterial`/`BidLabor` carry their own `quantity` and `unitPrice` override fields.
+
+## API shape
+
+Standard CRUD on every entity: `GET /all`, `GET /find/{id}`, `POST /add`, `PUT /update`, `DELETE /delete/{id}`.
+
+Non-obvious extras:
+- `PUT /client/addProjectBid/{clientId}` and `PUT /contractor/addServiceOffer/{contractorId}/{bidId}` — the primary way to associate entities
+- Individual and Company each have their own `/individual/add` and `/company/add` endpoints, not `/contractor/add`
+- `UserController.update()` uses `@PostMapping` by mistake — the only controller that does this
+
+CORS allows `http://localhost:4200` with credentials.
+
+## Gotchas
+
+- `ddl-auto = create-drop` — **schema is destroyed and rebuilt on every startup**. `RenovApplication.java` re-seeds sample data via `CommandLineRunner` each time.
+- DB connection overridable via `DB_URL`, `DB_USERNAME`, `DB_PASSWORD` env vars (what Docker Compose uses to point at the `db` service).
+- No authentication, no input validation, passwords stored plain text.
+- `ContractorFormComponent` and `ContractorDetailComponent` are empty placeholders.
