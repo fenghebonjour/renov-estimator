@@ -43,3 +43,25 @@
   background: rgba(255,255,255,0.15);
   color: #fff;
 }
+
+.user-info {
+  color: #a8c0d8;
+  font-size: 0.85rem;
+  padding: 0 0.5rem;
+}
+
+.logout-btn {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.3);
+  color: #c8d8e8;
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.logout-btn:hover {
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+}

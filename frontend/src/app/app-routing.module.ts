@@ -10,20 +10,23 @@ import { ClientFormComponent } from './components/clients/client-form.component'
 import { ContractorListComponent } from './components/contractors/contractor-list.component';
 import { ContractorDetailComponent } from './components/contractors/contractor-detail.component';
 import { ContractorFormComponent } from './components/contractors/contractor-form.component';
+import { LoginComponent } from './components/auth/login.component';
+import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
+  { path: 'login', component: LoginComponent },
   { path: '', redirectTo: '/bids', pathMatch: 'full' },
-  { path: 'bids',                               component: ProjectBidListComponent },
-  { path: 'bids/:id',                           component: ProjectBidDetailComponent },
-  { path: 'bids/:bidId/offers/new',             component: ServiceOfferFormComponent },
-  { path: 'clients',                            component: ClientListComponent },
-  { path: 'clients/new',                        component: ClientFormComponent },
-  { path: 'clients/:id',                        component: ClientDetailComponent },
-  { path: 'clients/:id/edit',                   component: ClientFormComponent },
-  { path: 'clients/:clientId/bids/new',         component: ProjectBidFormComponent },
-  { path: 'contractors',                        component: ContractorListComponent },
-  { path: 'contractors/new',                    component: ContractorFormComponent },
-  { path: 'contractors/:id',                    component: ContractorDetailComponent },
+  { path: 'bids',                               component: ProjectBidListComponent,   canActivate: [AuthGuard] },
+  { path: 'bids/:id',                           component: ProjectBidDetailComponent,  canActivate: [AuthGuard] },
+  { path: 'bids/:bidId/offers/new',             component: ServiceOfferFormComponent,  canActivate: [AuthGuard] },
+  { path: 'clients',                            component: ClientListComponent,        canActivate: [AuthGuard] },
+  { path: 'clients/new',                        component: ClientFormComponent,        canActivate: [AuthGuard] },
+  { path: 'clients/:id',                        component: ClientDetailComponent,      canActivate: [AuthGuard] },
+  { path: 'clients/:id/edit',                   component: ClientFormComponent,        canActivate: [AuthGuard] },
+  { path: 'clients/:clientId/bids/new',         component: ProjectBidFormComponent,    canActivate: [AuthGuard] },
+  { path: 'contractors',                        component: ContractorListComponent,    canActivate: [AuthGuard] },
+  { path: 'contractors/new',                    component: ContractorFormComponent,    canActivate: [AuthGuard] },
+  { path: 'contractors/:id',                    component: ContractorDetailComponent,  canActivate: [AuthGuard] },
 ];
 
 @NgModule({

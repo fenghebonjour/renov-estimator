@@ -1,8 +1,12 @@
 <nav class="navbar">
   <a class="brand" routerLink="/bids">RenovEstimator</a>
   <ul class="nav-links">
-    <li><a routerLink="/bids" routerLinkActive="active">Project Bids</a></li>
-    <li><a routerLink="/clients" routerLinkActive="active">Clients</a></li>
-    <li><a routerLink="/contractors" routerLinkActive="active">Contractors</a></li>
+    <ng-container *ngIf="authService.isLoggedIn()">
+      <li><a routerLink="/bids" routerLinkActive="active">Project Bids</a></li>
+      <li><a routerLink="/clients" routerLinkActive="active">Clients</a></li>
+      <li><a routerLink="/contractors" routerLinkActive="active">Contractors</a></li>
+      <li class="user-info">{{ authService.getCurrentUsername() }}</li>
+      <li><button class="logout-btn" (click)="authService.logout()">Sign Out</button></li>
+    </ng-container>
   </ul>
 </nav>
