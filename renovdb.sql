@@ -287,14 +287,14 @@ CREATE TABLE `app_user` (
 --   contracteur002 / contracteur002  (type: Company)
 
 INSERT INTO `app_user` (`user_id`, `registration_date`, `password`, `type`, `username`) VALUES
-(4,  '2021-10-12', 'contracteur001', 'Individual', 'contracteur001'),
-(5,  '2021-10-20', 'contracteur002', 'Company',    'contracteur002'),
-(11, '2021-10-10', 'client001',      'Client',     'client001'),
-(12, '2021-10-06', 'client002',      'Client',     'client002'),
-(13, '2021-10-22', 'client3',        'Client',     'client3'),
-(14, '2021-10-22', 'client4',        'Client',     'client4'),
-(15, '2021-10-22', 'contracteur003', 'Individual', 'contracteur003'),
-(16, '2021-10-22', 'contracteur004', 'Individual', 'contracteur004');
+(4,  '2021-10-12', '$2b$12$uB.1R1eJ7onXitTbQXb7ZelSVIu2HWQN07fKc.Qa2UDU9eunKz.Om', 'Individual', 'contracteur001'),
+(5,  '2021-10-20', '$2b$12$GFvDmaGFMeyPZloTzbI23OtSqEDA00pzTP0HY0pe.Atu.5gJ/vfMm', 'Company',    'contracteur002'),
+(11, '2021-10-10', '$2b$12$AQJhajaC2mHREaC9e7tuyei7Gxs3h74bGMiZVW0fyJ6/aTF6UGS8C', 'Client',     'client001'),
+(12, '2021-10-06', '$2b$12$WQS.6qXgboKtPciI2p0VnuSVv01Mw/pXcSQ28P/7YczOC8vglWuMu', 'Client',     'client002'),
+(13, '2021-10-22', '$2b$12$0natay3JXRjANZz41SBnn.7bWNTpS8LsGDGpuVYpI3DAMSHokI.3O', 'Client',     'client3'),
+(14, '2021-10-22', '$2b$12$oIARnUvbPMzxgGoDUI.Gv.fAOPN.ILJloaUHFemisMmPnLu.UmREm', 'Client',     'client4'),
+(15, '2021-10-22', '$2b$12$VxXYtQUQZrayQzaLtPfXFe6IKwhkj4XSQlOXELvYwHMsPhGT6Mf0a', 'Individual', 'contracteur003'),
+(16, '2021-10-22', '$2b$12$aTqSlffpKdJsz11J8PNvEOpICmp1/Em2APcGMLRb8L8OTfXug2uVq', 'Individual', 'contracteur004');
 
 -- --------------------------------------------------------
 -- Table structure: user_sequence
