@@ -235,6 +235,34 @@ Those three inputs fully determine the digest, deterministically. The stored val
 
 > BCrypt transfers the burden of knowing the password entirely to the user. The system only ever needs to ask "does this candidate produce the same digest?" — never "what is the password?"
 
+### What about Google Passwords and browser autofill?
+
+The statement "the plain text ceases to exist on the server side" remains true — the web app server never stores it. But the **browser** operates on a completely separate layer, intercepting what you type before it ever reaches the server:
+
+```
+You type "client001"
+       ↓
+[Browser / Google Password Manager]  ← saves a copy HERE, client-side
+       ↓
+POST /auth/login { password: "client001" }
+       ↓
+[Web App Server]  ← receives it, BCrypt-hashes it, discards the plain text
+```
+
+Google Password Manager, Apple Keychain, 1Password, Bitwarden — these are all **client-side vaults**. They intercept the plain text at the browser level, encrypt it with their own key, and store it either locally on your device or in their cloud. The web application has no knowledge that this happened.
+
+| Vault | Operated by | Where stored |
+|---|---|---|
+| Google Password Manager | Google | Google's cloud, synced across devices |
+| Apple Keychain | Apple | iCloud / local device |
+| 1Password / Bitwarden | Third-party companies | Their cloud (Bitwarden is open source) |
+| Firefox password manager | Mozilla | Local + Firefox account sync |
+| Windows Credential Manager | Microsoft | Local device |
+
+**The security implication:** if your Google account is compromised, an attacker can access every password Google saved for you. The web application's BCrypt protection is irrelevant at that point — the attacker already has the plain text from the vault.
+
+The web app protects the password **on the server side** using BCrypt. The browser/Google protects the password **on the client side** using their own vault. These are two independent layers, operated by completely different parties.
+
 ### Code reference
 
 | Step | Location |
@@ -337,6 +365,33 @@ BCrypt is designed for **high-entropy** inputs like passwords where the search s
 ## 3. JWT Authentication Flow
 
 JWT (JSON Web Token) is a secure, compact standard used to transmit information between two parties as a digitally signed object. It is most commonly used for authentication, API authorization, and secure information exchange in modern web and mobile applications. The server is **stateless** — it holds no session. Each request carries its own proof of identity in the token.
+
+### Authentication vs JWT — what is the relationship?
+
+They are not the same thing. **Authentication is the process; JWT is the result.**
+
+```
+Authentication  →  answers "who are you?" (once, at login)
+JWT             →  carries proof of that answer (on every request after)
+```
+
+Without authentication first, there is no JWT. Without JWT, you would have to authenticate (re-enter your password) on every single API call.
+
+```
+Step 1 — Authentication (happens once)
+  User submits username + password
+  Server runs BCrypt.matches() → identity confirmed
+  Server issues a JWT → "here is your proof"
+
+Step 2 — JWT in use (every request after)
+  User sends the JWT in the Authorization header
+  Server verifies the signature → no password needed again
+  Request is allowed
+```
+
+JWT exists specifically to avoid repeating authentication. Authentication is expensive — BCrypt takes ~100ms plus a DB query. JWT verification is cheap — one HMAC check, no DB call. JWT lets the server be **stateless**: it remembers nothing between requests, trusting the token to carry all necessary proof.
+
+---
 
 ### The story of the airport boarding pass
 
@@ -540,6 +595,48 @@ Browser                          Backend
 ### Client-side token decoding
 
 `AuthService.getCurrentUsername()` reads the username from the token by base64-decoding the payload segment (`token.split('.')[1]`). This does **not** verify the signature — it is only a convenience read. Signature verification happens exclusively server-side in `JwtUtil.validateToken()`.
+
+### Inspecting the JWT in the browser (F12)
+
+**Network tab — catch it at login**
+1. Open F12 → **Network** tab
+2. Log in
+3. Click the `login` request → **Response** — the raw JSON:
+```json
+{
+  "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjbGllbnQwMDEiLCJpYXQiOjE3....",
+  "userId": 1,
+  "userType": "Client"
+}
+```
+
+**Application tab — read it from localStorage**
+1. F12 → **Application** tab
+2. Left sidebar → **Local Storage** → `http://localhost:4200`
+3. Key `token` holds the full JWT string
+
+**Console tab — decode the payload instantly**
+
+Paste this in the **Console**:
+```js
+JSON.parse(atob(localStorage.getItem('token').split('.')[1]))
+```
+Output:
+```json
+{ "sub": "client001", "iat": 1750000000, "exp": 1750086400 }
+```
+
+This is exactly what `AuthService.getCurrentUsername()` does at `auth.service.ts:49`.
+
+**Decode all three segments**
+```js
+const [h, p, s] = localStorage.getItem('token').split('.');
+console.log('Header: ',  JSON.parse(atob(h)));  // { alg: "HS256" }
+console.log('Payload: ', JSON.parse(atob(p)));  // { sub, iat, exp }
+console.log('Signature:', s);                   // raw base64 — not decodable
+```
+
+The signature (`s`) cannot be decoded into readable JSON — it is the raw HMAC-SHA256 bytes in base64. Only the server, holding the secret key (`application.properties:8`), can verify it.
 
 ---
 
