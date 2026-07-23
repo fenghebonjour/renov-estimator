@@ -4,9 +4,10 @@ import { Client } from '../../models/client.model';
 import { ClientService } from '../../services/client.service';
 
 @Component({
-  selector: 'app-client-detail',
-  templateUrl: './client-detail.component.html',
-  styleUrls: ['./client-detail.component.css']
+    selector: 'app-client-detail',
+    templateUrl: './client-detail.component.html',
+    styleUrls: ['./client-detail.component.css'],
+    standalone: false
 })
 export class ClientDetailComponent implements OnInit {
   client: Client | null = null;

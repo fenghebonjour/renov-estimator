@@ -120,9 +120,10 @@ Java stack information for the threads listed above:
 Found 1 deadlock.`;
 
 @Component({
-  selector: 'app-jvm-metrics',
-  templateUrl: './jvm-metrics.component.html',
-  styleUrls: ['./jvm-metrics.component.css']
+    selector: 'app-jvm-metrics',
+    templateUrl: './jvm-metrics.component.html',
+    styleUrls: ['./jvm-metrics.component.css'],
+    standalone: false
 })
 export class JvmMetricsComponent {
   activeId: string | null = null;

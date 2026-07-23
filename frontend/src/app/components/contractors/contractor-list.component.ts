@@ -4,9 +4,10 @@ import { Contractor } from '../../models/contractor.model';
 import { ContractorService } from '../../services/contractor.service';
 
 @Component({
-  selector: 'app-contractor-list',
-  templateUrl: './contractor-list.component.html',
-  styleUrls: ['./contractor-list.component.css']
+    selector: 'app-contractor-list',
+    templateUrl: './contractor-list.component.html',
+    styleUrls: ['./contractor-list.component.css'],
+    standalone: false
 })
 export class ContractorListComponent implements OnInit {
   contractors: Contractor[] = [];

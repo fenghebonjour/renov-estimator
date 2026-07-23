@@ -5,9 +5,10 @@ import { ContractorService } from '../../services/contractor.service';
 import { Contractor } from '../../models/contractor.model';
 
 @Component({
-  selector: 'app-service-offer-form',
-  templateUrl: './service-offer-form.component.html',
-  styleUrls: ['./service-offer-form.component.css']
+    selector: 'app-service-offer-form',
+    templateUrl: './service-offer-form.component.html',
+    styleUrls: ['./service-offer-form.component.css'],
+    standalone: false
 })
 export class ServiceOfferFormComponent implements OnInit {
   form!: UntypedFormGroup;

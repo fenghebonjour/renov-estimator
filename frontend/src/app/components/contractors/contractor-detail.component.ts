@@ -4,9 +4,10 @@ import { Contractor } from '../../models/contractor.model';
 import { ContractorService } from '../../services/contractor.service';
 
 @Component({
-  selector: 'app-contractor-detail',
-  templateUrl: './contractor-detail.component.html',
-  styleUrls: ['./contractor-detail.component.css']
+    selector: 'app-contractor-detail',
+    templateUrl: './contractor-detail.component.html',
+    styleUrls: ['./contractor-detail.component.css'],
+    standalone: false
 })
 export class ContractorDetailComponent implements OnInit {
   contractor: Contractor | null = null;

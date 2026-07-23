@@ -4,9 +4,10 @@ import { Router } from '@angular/router';
 import { ContractorService } from '../../services/contractor.service';
 
 @Component({
-  selector: 'app-contractor-form',
-  templateUrl: './contractor-form.component.html',
-  styleUrls: ['./contractor-form.component.css']
+    selector: 'app-contractor-form',
+    templateUrl: './contractor-form.component.html',
+    styleUrls: ['./contractor-form.component.css'],
+    standalone: false
 })
 export class ContractorFormComponent implements OnInit {
   form!: UntypedFormGroup;

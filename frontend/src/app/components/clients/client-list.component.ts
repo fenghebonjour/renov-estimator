@@ -4,9 +4,10 @@ import { Client } from '../../models/client.model';
 import { ClientService } from '../../services/client.service';
 
 @Component({
-  selector: 'app-client-list',
-  templateUrl: './client-list.component.html',
-  styleUrls: ['./client-list.component.css']
+    selector: 'app-client-list',
+    templateUrl: './client-list.component.html',
+    styleUrls: ['./client-list.component.css'],
+    standalone: false
 })
 export class ClientListComponent implements OnInit {
   clients: Client[] = [];

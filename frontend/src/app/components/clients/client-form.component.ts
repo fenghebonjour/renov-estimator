@@ -4,9 +4,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ClientService } from '../../services/client.service';
 
 @Component({
-  selector: 'app-client-form',
-  templateUrl: './client-form.component.html',
-  styleUrls: ['./client-form.component.css']
+    selector: 'app-client-form',
+    templateUrl: './client-form.component.html',
+    styleUrls: ['./client-form.component.css'],
+    standalone: false
 })
 export class ClientFormComponent implements OnInit {
   form!: UntypedFormGroup;

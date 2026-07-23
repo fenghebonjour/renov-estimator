@@ -4,9 +4,10 @@ import { ProjectBid } from '../../models/project-bid.model';
 import { ProjectBidService } from '../../services/project-bid.service';
 
 @Component({
-  selector: 'app-project-bid-list',
-  templateUrl: './project-bid-list.component.html',
-  styleUrls: ['./project-bid-list.component.css']
+    selector: 'app-project-bid-list',
+    templateUrl: './project-bid-list.component.html',
+    styleUrls: ['./project-bid-list.component.css'],
+    standalone: false
 })
 export class ProjectBidListComponent implements OnInit {
   bids: ProjectBid[] = [];

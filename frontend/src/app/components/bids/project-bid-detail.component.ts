@@ -5,9 +5,10 @@ import { ServiceOffer } from '../../models/service-offer.model';
 import { ProjectBidService } from '../../services/project-bid.service';
 
 @Component({
-  selector: 'app-project-bid-detail',
-  templateUrl: './project-bid-detail.component.html',
-  styleUrls: ['./project-bid-detail.component.css']
+    selector: 'app-project-bid-detail',
+    templateUrl: './project-bid-detail.component.html',
+    styleUrls: ['./project-bid-detail.component.css'],
+    standalone: false
 })
 export class ProjectBidDetailComponent implements OnInit {
   bid: ProjectBid | null = null;

@@ -4,9 +4,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ClientService } from '../../services/client.service';
 
 @Component({
-  selector: 'app-project-bid-form',
-  templateUrl: './project-bid-form.component.html',
-  styleUrls: ['./project-bid-form.component.css']
+    selector: 'app-project-bid-form',
+    templateUrl: './project-bid-form.component.html',
+    styleUrls: ['./project-bid-form.component.css'],
+    standalone: false
 })
 export class ProjectBidFormComponent implements OnInit {
   form!: UntypedFormGroup;
