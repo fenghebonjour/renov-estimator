@@ -11,6 +11,8 @@ import { ContractorListComponent } from './components/contractors/contractor-lis
 import { ContractorDetailComponent } from './components/contractors/contractor-detail.component';
 import { ContractorFormComponent } from './components/contractors/contractor-form.component';
 import { LoginComponent } from './components/auth/login.component';
+import { LaboDashboardComponent } from './components/labo/labo-dashboard.component';
+import { JvmMetricsComponent } from './components/labo/jvm-metrics.component';
 import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
@@ -27,6 +29,8 @@ const routes: Routes = [
   { path: 'contractors',                        component: ContractorListComponent,    canActivate: [AuthGuard] },
   { path: 'contractors/new',                    component: ContractorFormComponent,    canActivate: [AuthGuard] },
   { path: 'contractors/:id',                    component: ContractorDetailComponent,  canActivate: [AuthGuard] },
+  { path: 'labo',                               component: LaboDashboardComponent,     canActivate: [AuthGuard] },
+  { path: 'labo/jvm-metrics',                   component: JvmMetricsComponent,        canActivate: [AuthGuard] },
 ];
 
 @NgModule({

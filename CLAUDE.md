@@ -1,4 +1,4 @@
-# EstimateurReno
+# Renov Estimator
 
 Connects clients with renovation contractors. Clients post project bids; contractors respond with service offers priced by materials and labour line items.
 

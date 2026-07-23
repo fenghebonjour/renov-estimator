@@ -17,6 +17,8 @@ import { ClientFormComponent } from './components/clients/client-form.component'
 import { ContractorListComponent } from './components/contractors/contractor-list.component';
 import { ContractorDetailComponent } from './components/contractors/contractor-detail.component';
 import { ContractorFormComponent } from './components/contractors/contractor-form.component';
+import { LaboDashboardComponent } from './components/labo/labo-dashboard.component';
+import { JvmMetricsComponent } from './components/labo/jvm-metrics.component';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 
 @NgModule({
@@ -34,6 +36,8 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
     ContractorListComponent,
     ContractorDetailComponent,
     ContractorFormComponent,
+    LaboDashboardComponent,
+    JvmMetricsComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,297 @@
+.intro {
+  color: #555;
+  margin: 0 0 1.75rem;
+  max-width: 800px;
+  line-height: 1.6;
+}
+
+.intro code {
+  background: #e8edf2;
+  padding: 0.1em 0.35em;
+  border-radius: 3px;
+  font-size: 0.9em;
+}
+
+/* ── Scenario buttons ──────────────────────────────── */
+
+.scenario-row {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.scenario-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.85rem 1.4rem;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  background: #fff;
+  cursor: pointer;
+  font-family: inherit;
+  transition: box-shadow 0.15s, transform 0.1s, border-color 0.15s;
+  min-width: 220px;
+  text-align: left;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.scenario-btn:hover {
+  box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+  transform: translateY(-1px);
+}
+
+.scenario-btn .btn-icon {
+  font-size: 1.4rem;
+  flex-shrink: 0;
+}
+
+.scenario-btn .btn-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.scenario-btn strong {
+  font-size: 0.95rem;
+  color: #1a3a5c;
+}
+
+.scenario-btn small {
+  font-size: 0.78rem;
+  color: #888;
+}
+
+.scenario-btn.cpu   .btn-icon { color: #d97706; }
+.scenario-btn.lock  .btn-icon { color: #ea580c; }
+.scenario-btn.deadlock .btn-icon { color: #dc2626; }
+
+.scenario-btn.cpu.active   { border-color: #d97706; background: #fffbeb; }
+.scenario-btn.lock.active  { border-color: #ea580c; background: #fff7ed; }
+.scenario-btn.deadlock.active { border-color: #dc2626; background: #fef2f2; }
+
+/* ── Scenario panel ────────────────────────────────── */
+
+.scenario-panel {
+  border: 1px solid #e1e4e8;
+  border-radius: 10px;
+  background: #fff;
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+}
+
+.panel-cpu      { border-top: 4px solid #d97706; }
+.panel-lock     { border-top: 4px solid #ea580c; }
+.panel-deadlock { border-top: 4px solid #dc2626; }
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 1.25rem 1.5rem 0;
+}
+
+.panel-header h2 {
+  margin: 0 0 0.25rem;
+  color: #1a3a5c;
+  font-size: 1.15rem;
+}
+
+.tagline {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  color: #aaa;
+  cursor: pointer;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  line-height: 1;
+}
+
+.close-btn:hover { color: #555; background: #f0f0f0; }
+
+.description {
+  padding: 0.75rem 1.5rem 1rem;
+  color: #444;
+  font-size: 0.9rem;
+  line-height: 1.65;
+  margin: 0;
+  max-width: 900px;
+}
+
+/* ── Thread dump viewer ────────────────────────────── */
+
+.dump-section {
+  margin: 0 1.5rem 1.25rem;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid #2d2d2d;
+}
+
+.dump-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #2d2d2d;
+  padding: 0.4rem 0.9rem;
+}
+
+.dump-label {
+  font-size: 0.75rem;
+  color: #8a8a8a;
+  font-family: 'Courier New', monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.legend {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.legend-dot {
+  font-size: 0.7rem;
+  padding: 0.1em 0.5em;
+  border-radius: 3px;
+  font-weight: 600;
+}
+
+.dump-pre {
+  margin: 0;
+  padding: 0.75rem 0;
+  background: #1e1e1e;
+  overflow-x: auto;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.78rem;
+  line-height: 1.55;
+}
+
+.dump-line {
+  display: block;
+  padding: 0 0.9rem;
+  white-space: pre;
+}
+
+/* ── Dump line highlights ──────────────────────────── */
+
+.hl-normal        { color: #c8c8c8; }
+.hl-thread-name   { color: #9cdcfe; font-weight: 600; }
+.hl-runnable      { color: #fbbf24; font-weight: 700; background: rgba(251,191,36,0.08); }
+.hl-blocked       { color: #fb923c; font-weight: 700; background: rgba(251,146,60,0.10); }
+.hl-waiting       { color: #94a3b8; }
+.hl-lock-held     { color: #4ade80; background: rgba(74,222,128,0.07); }
+.hl-lock-wait     { color: #f87171; background: rgba(248,113,113,0.08); }
+.hl-deadlock-alert { color: #ef4444; font-weight: 700; background: rgba(239,68,68,0.12); }
+.hl-deadlock-body  { color: #fca5a5; }
+
+/* legend dots reuse the same classes */
+.legend-dot.hl-runnable     { background: rgba(251,191,36,0.2);  color: #fbbf24; }
+.legend-dot.hl-blocked      { background: rgba(251,146,60,0.2);  color: #fb923c; }
+.legend-dot.hl-lock-held    { background: rgba(74,222,128,0.2);  color: #4ade80; }
+.legend-dot.hl-lock-wait    { background: rgba(248,113,113,0.2); color: #f87171; }
+.legend-dot.hl-deadlock-alert { background: rgba(239,68,68,0.2); color: #ef4444; }
+
+/* ── Analysis grid ─────────────────────────────────── */
+
+.analysis-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  padding: 0 1.5rem 1.5rem;
+}
+
+.analysis-card {
+  background: #f8f9fb;
+  border: 1px solid #e4e7ec;
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+}
+
+.analysis-card h3 {
+  margin: 0 0 0.65rem;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #1a3a5c;
+}
+
+.analysis-card ul,
+.analysis-card ol {
+  margin: 0;
+  padding-left: 1.25rem;
+  font-size: 0.85rem;
+  color: #444;
+  line-height: 1.7;
+}
+
+.commands-card { grid-column: 1 / -1; }
+
+.cmd-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.cmd-list code {
+  display: block;
+  background: #1e1e1e;
+  color: #4ade80;
+  padding: 0.35rem 0.75rem;
+  border-radius: 5px;
+  font-family: 'Courier New', monospace;
+  font-size: 0.82rem;
+}
+
+/* ── Hint & reference ──────────────────────────────── */
+
+.hint-box {
+  padding: 2rem;
+  background: #fff;
+  border: 1px dashed #cdd4dc;
+  border-radius: 8px;
+  text-align: center;
+  color: #999;
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+}
+
+.ref-panel { margin-bottom: 2rem; }
+
+.ref-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.ref-item p {
+  margin: 0.4rem 0 0;
+  font-size: 0.82rem;
+  color: #555;
+  line-height: 1.5;
+}
+
+.state-tag {
+  display: inline-block;
+  padding: 0.2rem 0.65rem;
+  border-radius: 4px;
+  font-family: 'Courier New', monospace;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.state-tag.runnable { background: #fef3c7; color: #92400e; }
+.state-tag.blocked  { background: #ffedd5; color: #9a3412; }
+.state-tag.waiting  { background: #e0e7ef; color: #1a3a5c; }
+.state-tag.timed    { background: #e0e7ef; color: #1a3a5c; }

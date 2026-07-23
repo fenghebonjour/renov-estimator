@@ -1,0 +1,67 @@
+<div class="page">
+
+  <div class="page-header">
+    <h1>Lab</h1>
+    <span class="count">sandbox</span>
+  </div>
+
+  <p class="intro">
+    A learning and experimentation area for JVM performance diagnostics, debugging techniques,
+    and technical interview preparation. Tools here are self-contained — no backend calls required.
+  </p>
+
+  <div class="tool-grid">
+
+    <a routerLink="/labo/jvm-metrics" class="tool-card">
+      <div class="tool-icon jvm-icon">JVM</div>
+      <div class="tool-body">
+        <h2>JVM Diagnostics</h2>
+        <p>
+          Practice reading <code>jstack</code> thread dumps. Explore three classic failure patterns:
+          hot loop, lock contention, and deadlock.
+        </p>
+        <ul class="tool-tags">
+          <li>jstack</li>
+          <li>jmap</li>
+          <li>GC metrics</li>
+          <li>thread states</li>
+        </ul>
+      </div>
+    </a>
+
+    <div class="tool-card coming-soon">
+      <div class="tool-icon heap-icon">HEAP</div>
+      <div class="tool-body">
+        <h2>Heap Analysis <span class="soon-badge">soon</span></h2>
+        <p>
+          Walk through jmap heap histograms and understand common memory leak signatures
+          — large char[] arrays, retained closures, and unclosed streams.
+        </p>
+        <ul class="tool-tags">
+          <li>jmap</li>
+          <li>heap dump</li>
+          <li>OutOfMemoryError</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tool-card coming-soon">
+      <div class="tool-icon gc-icon">GC</div>
+      <div class="tool-body">
+        <h2>GC Tuning <span class="soon-badge">soon</span></h2>
+        <p>
+          Compare GC log snippets from G1, ZGC, and Parallel GC.
+          Learn to spot excessive pause times and promotion failures.
+        </p>
+        <ul class="tool-tags">
+          <li>G1GC</li>
+          <li>ZGC</li>
+          <li>GC logs</li>
+          <li>pause time</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+</div>
