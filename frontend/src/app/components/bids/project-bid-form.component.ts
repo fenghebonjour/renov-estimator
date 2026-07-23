@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ClientService } from '../../services/client.service';
 
@@ -9,7 +9,7 @@ import { ClientService } from '../../services/client.service';
   styleUrls: ['./project-bid-form.component.css']
 })
 export class ProjectBidFormComponent implements OnInit {
-  form!: FormGroup;
+  form!: UntypedFormGroup;
   clientId!: number;
   clientName = '';
   saving = false;
@@ -18,7 +18,7 @@ export class ProjectBidFormComponent implements OnInit {
   readonly types = ['Painting', 'Plastering', 'Framing', 'Electrical', 'Plumbing', 'Insulation', 'Roofing', 'Other'];
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private clientService: ClientService,
     private route: ActivatedRoute,
     private router: Router

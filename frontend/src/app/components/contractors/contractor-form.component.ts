@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ContractorService } from '../../services/contractor.service';
 
@@ -9,13 +9,13 @@ import { ContractorService } from '../../services/contractor.service';
   styleUrls: ['./contractor-form.component.css']
 })
 export class ContractorFormComponent implements OnInit {
-  form!: FormGroup;
+  form!: UntypedFormGroup;
   contractorType: 'Individual' | 'Company' = 'Individual';
   saving = false;
   error = '';
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private service: ContractorService,
     private router: Router
   ) {}

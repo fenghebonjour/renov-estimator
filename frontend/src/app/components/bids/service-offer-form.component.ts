@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ContractorService } from '../../services/contractor.service';
 import { Contractor } from '../../models/contractor.model';
@@ -10,7 +10,7 @@ import { Contractor } from '../../models/contractor.model';
   styleUrls: ['./service-offer-form.component.css']
 })
 export class ServiceOfferFormComponent implements OnInit {
-  form!: FormGroup;
+  form!: UntypedFormGroup;
   bidId!: number;
   contractors: Contractor[] = [];
   loadingContractors = true;
@@ -18,7 +18,7 @@ export class ServiceOfferFormComponent implements OnInit {
   error = '';
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private contractorService: ContractorService,
     private route: ActivatedRoute,
     private router: Router

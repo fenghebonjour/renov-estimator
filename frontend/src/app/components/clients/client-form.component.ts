@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ClientService } from '../../services/client.service';
 
@@ -9,13 +9,13 @@ import { ClientService } from '../../services/client.service';
   styleUrls: ['./client-form.component.css']
 })
 export class ClientFormComponent implements OnInit {
-  form!: FormGroup;
+  form!: UntypedFormGroup;
   editId: number | null = null;
   saving = false;
   error = '';
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private service: ClientService,
     private route: ActivatedRoute,
     private router: Router
