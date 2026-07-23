@@ -2,14 +2,14 @@
 
 Connects clients with renovation contractors. Clients post project bids; contractors respond with service offers priced by materials and labour line items.
 
-Stack: Spring Boot 2.5.4 / Java 11 / MySQL 5.7 / Angular 21 / Docker Compose.
+**Stack:** Spring Boot 2.5.4 / Java 11 / MySQL 5.7 / Angular 21 / Docker Compose.
 
 ## Running
 
 ```bash
-docker compose up --build          # full stack; frontend :4200, API :8080
+docker compose up --build              # full stack; frontend :4200, API :8080
 cd backend && ./mvnw spring-boot:run   # backend only (needs local MySQL)
-cd frontend && ng serve            # frontend only
+cd frontend && ng serve                # frontend only
 ```
 
 MySQL listens on host port `3326` (mapped to the container's `3306`) when run via Docker Compose.
@@ -28,7 +28,7 @@ User (app_user)
     Company (company)           — name, contactPerson
 ```
 
-Bidding flow: `Client → ProjectBid → ServiceOffer → BidMaterial → Material`  
+Bidding flow: `Client → ProjectBid → ServiceOffer → BidMaterial → Material`
                                                   `→ BidLabor    → Labor`
 
 `UserAddress`, `BidMaterial`, `BidLabor` are composite-key join tables (`@EmbeddedId`); `BidMaterial`/`BidLabor` carry their own `quantity` and `unitPrice` override fields.
@@ -53,3 +53,4 @@ JWT-based (Spring Security on the backend, route guards + an HTTP interceptor on
 - `ddl-auto = create-drop` — **schema is destroyed and rebuilt on every startup**. `RenovApplication.java` re-seeds sample data via `CommandLineRunner` each time.
 - DB connection overridable via `DB_URL`, `DB_USERNAME`, `DB_PASSWORD` env vars (what Docker Compose uses to point at the `db` service).
 - No input validation.
+- `ContractorFormComponent` and `ContractorDetailComponent` are empty placeholders.
