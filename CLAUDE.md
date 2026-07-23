@@ -2,7 +2,7 @@
 
 Connects clients with renovation contractors. Clients post project bids; contractors respond with service offers priced by materials and labour line items.
 
-Stack: Spring Boot 2.5.4 / Java 11 / MySQL 5.7 / Angular 21 / Docker Compose.
+Stack: Spring Boot 4.1.0 / Java 21 / MySQL 8.4 / Angular 21 / Docker Compose.
 
 ## Running
 
@@ -50,6 +50,6 @@ JWT-based (Spring Security on the backend, route guards + an HTTP interceptor on
 
 ## Gotchas
 
-- `ddl-auto = create-drop` — **schema is destroyed and rebuilt on every startup**. `RenovApplication.java` re-seeds sample data via `CommandLineRunner` each time.
+- `ddl-auto = update` in the running app — schema persists across restarts, it is not rebuilt (the `test` profile uses `create-drop` instead). There's no automatic seeding: sample data lives in `renovdb.sql` at the repo root and must be imported manually.
 - DB connection overridable via `DB_URL`, `DB_USERNAME`, `DB_PASSWORD` env vars (what Docker Compose uses to point at the `db` service).
 - No input validation.
