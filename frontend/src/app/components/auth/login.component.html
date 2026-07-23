@@ -10,7 +10,9 @@
         <label>Password</label>
         <input type="password" formControlName="password" autocomplete="current-password" />
       </div>
-      <p class="error" *ngIf="error">{{ error }}</p>
+      @if (error) {
+        <p class="error">{{ error }}</p>
+      }
       <button type="submit" [disabled]="loading">
         {{ loading ? 'Signing in…' : 'Sign In' }}
       </button>

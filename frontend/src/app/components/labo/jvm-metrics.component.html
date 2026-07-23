@@ -19,8 +19,8 @@
   <div class="scenario-row">
 
     <button class="scenario-btn cpu"
-            [class.active]="activeId === 'highCpu'"
-            (click)="activate('highCpu')">
+      [class.active]="activeId === 'highCpu'"
+      (click)="activate('highCpu')">
       <span class="btn-icon">&#9650;</span>
       <span class="btn-body">
         <strong>High CPU</strong>
@@ -29,8 +29,8 @@
     </button>
 
     <button class="scenario-btn lock"
-            [class.active]="activeId === 'blocked'"
-            (click)="activate('blocked')">
+      [class.active]="activeId === 'blocked'"
+      (click)="activate('blocked')">
       <span class="btn-icon">&#9646;</span>
       <span class="btn-body">
         <strong>Lock Contention</strong>
@@ -39,8 +39,8 @@
     </button>
 
     <button class="scenario-btn deadlock"
-            [class.active]="activeId === 'deadlock'"
-            (click)="activate('deadlock')">
+      [class.active]="activeId === 'deadlock'"
+      (click)="activate('deadlock')">
       <span class="btn-icon">&#9711;</span>
       <span class="btn-body">
         <strong>Deadlock</strong>
@@ -51,75 +51,80 @@
   </div>
 
   <!-- Active scenario panel -->
-  <div *ngIf="active" class="scenario-panel" [class]="'panel-' + active.severity">
-
-    <div class="panel-header">
-      <div>
-        <h2>{{ active.label }}</h2>
-        <p class="tagline">{{ active.tagline }}</p>
+  @if (active) {
+    <div class="scenario-panel" [class]="'panel-' + active.severity">
+      <div class="panel-header">
+        <div>
+          <h2>{{ active.label }}</h2>
+          <p class="tagline">{{ active.tagline }}</p>
+        </div>
+        <button class="close-btn" (click)="activate(active.id)">&#10005;</button>
       </div>
-      <button class="close-btn" (click)="activate(active.id)">&#10005;</button>
+      <p class="description">{{ active.description }}</p>
+      <!-- Thread dump -->
+      <div class="dump-section">
+        <div class="dump-toolbar">
+          <span class="dump-label">jstack output</span>
+          <span class="legend">
+            <span class="legend-dot hl-runnable">RUNNABLE</span>
+            <span class="legend-dot hl-blocked">BLOCKED</span>
+            <span class="legend-dot hl-lock-held">locked</span>
+            <span class="legend-dot hl-lock-wait">waiting</span>
+            @if (active.severity === 'deadlock') {
+              <span class="legend-dot hl-deadlock-alert">deadlock</span>
+            }
+          </span>
+        </div>
+        <pre class="dump-pre">@for (line of dumpLines(active.dump); track line) {
+          <span
+            class="dump-line"
+          [ngClass]="line.cls">{{ line.text }}</span>
+        }</pre>
+      </div>
+      <!-- Analysis -->
+      <div class="analysis-grid">
+        <div class="analysis-card">
+          <h3>Symptoms to watch for</h3>
+          <ul>
+            @for (s of active.symptoms; track s) {
+              <li>{{ s }}</li>
+            }
+          </ul>
+        </div>
+        <div class="analysis-card">
+          <h3>How to diagnose</h3>
+          <ol>
+            @for (d of active.diagnosis; track d) {
+              <li>{{ d }}</li>
+            }
+          </ol>
+        </div>
+        <div class="analysis-card">
+          <h3>Remediation options</h3>
+          <ul>
+            @for (f of active.fix; track f) {
+              <li>{{ f }}</li>
+            }
+          </ul>
+        </div>
+        <div class="analysis-card commands-card">
+          <h3>Useful commands</h3>
+          <ul class="cmd-list">
+            @for (c of active.commands; track c) {
+              <li><code>{{ c }}</code></li>
+            }
+          </ul>
+        </div>
+      </div>
     </div>
-
-    <p class="description">{{ active.description }}</p>
-
-    <!-- Thread dump -->
-    <div class="dump-section">
-      <div class="dump-toolbar">
-        <span class="dump-label">jstack output</span>
-        <span class="legend">
-          <span class="legend-dot hl-runnable">RUNNABLE</span>
-          <span class="legend-dot hl-blocked">BLOCKED</span>
-          <span class="legend-dot hl-lock-held">locked</span>
-          <span class="legend-dot hl-lock-wait">waiting</span>
-          <span *ngIf="active.severity === 'deadlock'" class="legend-dot hl-deadlock-alert">deadlock</span>
-        </span>
-      </div>
-      <pre class="dump-pre"><span
-        *ngFor="let line of dumpLines(active.dump)"
-        class="dump-line"
-        [ngClass]="line.cls">{{ line.text }}</span></pre>
-    </div>
-
-    <!-- Analysis -->
-    <div class="analysis-grid">
-
-      <div class="analysis-card">
-        <h3>Symptoms to watch for</h3>
-        <ul>
-          <li *ngFor="let s of active.symptoms">{{ s }}</li>
-        </ul>
-      </div>
-
-      <div class="analysis-card">
-        <h3>How to diagnose</h3>
-        <ol>
-          <li *ngFor="let d of active.diagnosis">{{ d }}</li>
-        </ol>
-      </div>
-
-      <div class="analysis-card">
-        <h3>Remediation options</h3>
-        <ul>
-          <li *ngFor="let f of active.fix">{{ f }}</li>
-        </ul>
-      </div>
-
-      <div class="analysis-card commands-card">
-        <h3>Useful commands</h3>
-        <ul class="cmd-list">
-          <li *ngFor="let c of active.commands"><code>{{ c }}</code></li>
-        </ul>
-      </div>
-
-    </div>
-
-  </div>
+  }
 
   <!-- Collapsed hint -->
-  <div *ngIf="!active" class="hint-box">
-    Select a scenario above to load its thread dump.
-  </div>
+  @if (!active) {
+    <div class="hint-box">
+      Select a scenario above to load its thread dump.
+    </div>
+  }
 
   <!-- Reference panel -->
   <div class="card ref-panel">
