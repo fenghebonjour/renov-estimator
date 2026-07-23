@@ -68,10 +68,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "renoang5:build:production"
+              "buildTarget": "renoang5:build:production"
             },
             "development": {
-              "browserTarget": "renoang5:build:development"
+              "buildTarget": "renoang5:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -79,7 +79,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "renoang5:build"
+            "buildTarget": "renoang5:build"
           }
         },
         "test": {
