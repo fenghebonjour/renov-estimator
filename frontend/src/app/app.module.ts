@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -21,33 +21,27 @@ import { LaboDashboardComponent } from './components/labo/labo-dashboard.compone
 import { JvmMetricsComponent } from './components/labo/jvm-metrics.component';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 
-@NgModule({
-  declarations: [
-    AppComponent,
-    NavComponent,
-    LoginComponent,
-    ProjectBidListComponent,
-    ProjectBidDetailComponent,
-    ProjectBidFormComponent,
-    ServiceOfferFormComponent,
-    ClientListComponent,
-    ClientDetailComponent,
-    ClientFormComponent,
-    ContractorListComponent,
-    ContractorDetailComponent,
-    ContractorFormComponent,
-    LaboDashboardComponent,
-    JvmMetricsComponent,
-  ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    ReactiveFormsModule,
-    AppRoutingModule,
-  ],
-  providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
-  ],
-  bootstrap: [AppComponent]
-})
+@NgModule({ declarations: [
+        AppComponent,
+        NavComponent,
+        LoginComponent,
+        ProjectBidListComponent,
+        ProjectBidDetailComponent,
+        ProjectBidFormComponent,
+        ServiceOfferFormComponent,
+        ClientListComponent,
+        ClientDetailComponent,
+        ClientFormComponent,
+        ContractorListComponent,
+        ContractorDetailComponent,
+        ContractorFormComponent,
+        LaboDashboardComponent,
+        JvmMetricsComponent,
+    ],
+    bootstrap: [AppComponent], imports: [BrowserModule,
+        ReactiveFormsModule,
+        AppRoutingModule], providers: [
+        { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+        provideHttpClient(withInterceptorsFromDi())
+    ] })
 export class AppModule { }
