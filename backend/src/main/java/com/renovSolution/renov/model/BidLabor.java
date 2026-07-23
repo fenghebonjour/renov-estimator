@@ -3,7 +3,7 @@ package com.renovSolution.renov.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity(name="BidLabor")
 @Table(name="bid_labor")

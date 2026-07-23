@@ -4,7 +4,6 @@ package com.renovSolution.renov.service;
 import com.renovSolution.renov.exception.UserNotFoundException;
 import com.renovSolution.renov.model.Address;
 import com.renovSolution.renov.repo.AddressRepo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,7 +15,6 @@ public class AddressService {
 
     private final AddressRepo addressRepo;
 
-    @Autowired
     public AddressService(AddressRepo addressRepo) {
         this.addressRepo = addressRepo;
     }

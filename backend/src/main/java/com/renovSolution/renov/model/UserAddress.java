@@ -3,7 +3,7 @@ package com.renovSolution.renov.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.io.Serializable;
 
 @Entity(name="UserAddress")

@@ -6,7 +6,6 @@ import com.renovSolution.renov.model.*;
 import com.renovSolution.renov.repo.AddressRepo;
 import com.renovSolution.renov.repo.UserAddressRepo;
 import com.renovSolution.renov.repo.UserRepo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,7 +19,6 @@ public class UserAddressService {
     private final UserAddressRepo userAddressRepo;
     private final AddressRepo addressRepo;
 
-    @Autowired
     public UserAddressService(UserRepo userRepo,
                                UserAddressRepo userAddressRepo,
                                AddressRepo addressRepo) {

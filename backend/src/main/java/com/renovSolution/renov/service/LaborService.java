@@ -3,7 +3,6 @@ package com.renovSolution.renov.service;
 import com.renovSolution.renov.exception.UserNotFoundException;
 import com.renovSolution.renov.model.Labor;
 import com.renovSolution.renov.repo.LaborRepo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,7 +14,6 @@ public class LaborService {
 
     private final LaborRepo laborRepo;
 
-    @Autowired
     public LaborService(LaborRepo laborRepo) {
         this.laborRepo = laborRepo;
     }

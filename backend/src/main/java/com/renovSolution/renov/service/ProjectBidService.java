@@ -4,7 +4,6 @@ package com.renovSolution.renov.service;
 import com.renovSolution.renov.exception.UserNotFoundException;
 import com.renovSolution.renov.model.ProjectBid;
 import com.renovSolution.renov.repo.ProjectBidRepo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,7 +14,6 @@ import java.util.List;
 public class ProjectBidService {
     private final ProjectBidRepo projectBidRepo;
 
-    @Autowired
     public ProjectBidService(ProjectBidRepo projectBidRepo) {
         this.projectBidRepo = projectBidRepo;
     }

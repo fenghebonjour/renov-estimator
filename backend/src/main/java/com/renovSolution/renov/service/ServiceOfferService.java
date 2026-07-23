@@ -5,7 +5,6 @@ import com.renovSolution.renov.exception.UserNotFoundException;
 import com.renovSolution.renov.model.*;
 import com.renovSolution.renov.repo.MaterialRepo;
 import com.renovSolution.renov.repo.ServiceOfferRepo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,7 +17,6 @@ public class ServiceOfferService {
     private final ServiceOfferRepo serviceOfferRepo;
     private final MaterialRepo materialRepo;
 
-    @Autowired
     public ServiceOfferService(ServiceOfferRepo serviceOfferRepo, MaterialRepo materialRepo) {
         this.serviceOfferRepo = serviceOfferRepo;
         this.materialRepo = materialRepo;

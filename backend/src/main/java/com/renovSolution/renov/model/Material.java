@@ -1,10 +1,10 @@
 package com.renovSolution.renov.model;
 
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.io.Serializable;
 
-import static javax.persistence.GenerationType.SEQUENCE;
+import static jakarta.persistence.GenerationType.SEQUENCE;
 
 @Entity(name="Material")
 @Table(name="material")

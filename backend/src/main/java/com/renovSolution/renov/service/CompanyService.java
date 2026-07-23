@@ -3,7 +3,6 @@ package com.renovSolution.renov.service;
 import com.renovSolution.renov.exception.UserNotFoundException;
 import com.renovSolution.renov.model.Company;
 import com.renovSolution.renov.repo.CompanyRepo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,7 +14,6 @@ public class CompanyService {
 
     private final CompanyRepo companyRepo;
 
-    @Autowired
     public CompanyService(CompanyRepo companyRepo) {
         this.companyRepo = companyRepo;
     }

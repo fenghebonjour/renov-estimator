@@ -4,7 +4,6 @@ package com.renovSolution.renov.service;
 import com.renovSolution.renov.exception.UserNotFoundException;
 import com.renovSolution.renov.model.Individual;
 import com.renovSolution.renov.repo.IndividualRepo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,7 +15,6 @@ public class IndividualService {
 
     private final IndividualRepo individualRepo;
 
-    @Autowired
     public IndividualService(IndividualRepo individualRepo) {
         this.individualRepo = individualRepo;
     }

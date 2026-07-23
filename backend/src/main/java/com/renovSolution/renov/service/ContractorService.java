@@ -7,7 +7,6 @@ import com.renovSolution.renov.model.ProjectBid;
 import com.renovSolution.renov.model.ServiceOffer;
 import com.renovSolution.renov.repo.ContractorRepo;
 import com.renovSolution.renov.repo.ProjectBidRepo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,7 +18,6 @@ public class ContractorService {
     private final ContractorRepo contractorRepo;
     private final ProjectBidRepo projectBidRepo;
 
-    @Autowired
     public ContractorService(ContractorRepo contractorRepo, ProjectBidRepo projectBidRepo) {
         this.contractorRepo = contractorRepo;
         this.projectBidRepo = projectBidRepo;
