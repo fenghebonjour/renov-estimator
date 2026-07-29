@@ -7,6 +7,10 @@ backend/.mvn/wrapper/maven-wrapper.jar
 frontend/node_modules/
 frontend/dist/
 frontend/.angular/
+frontend-signals/node_modules/
+frontend-signals/dist/
+frontend-signals/.angular/
+frontend-signals/*.log
 
 # Docker
 **/.env
@@ -15,3 +19,6 @@ frontend/.angular/
 .idea/
 *.iml
 .vscode/
+
+# Personal learning notes
+docs/BEGINNER_GUIDE.md

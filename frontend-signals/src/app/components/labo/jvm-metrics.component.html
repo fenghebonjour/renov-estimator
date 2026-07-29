@@ -1,0 +1,152 @@
+<div class="page">
+
+  <div class="breadcrumb">
+    <a routerLink="/labo">Lab</a> / JVM Diagnostics
+  </div>
+
+  <div class="page-header">
+    <h1>JVM Diagnostics</h1>
+    <span class="count">3 scenarios</span>
+  </div>
+
+  <p class="intro">
+    Practice reading <code>jstack</code> thread dumps to identify the three most common JVM failure patterns.
+    Click a scenario to load a realistic dump from this app's codebase, then study the highlighted lines
+    and diagnosis notes below.
+  </p>
+
+  <!-- Scenario buttons -->
+  <div class="scenario-row">
+
+    <button class="scenario-btn cpu"
+      [class.active]="activeId() === 'highCpu'"
+      (click)="activate('highCpu')">
+      <span class="btn-icon">&#9650;</span>
+      <span class="btn-body">
+        <strong>High CPU</strong>
+        <small>RUNNABLE hot loop</small>
+      </span>
+    </button>
+
+    <button class="scenario-btn lock"
+      [class.active]="activeId() === 'blocked'"
+      (click)="activate('blocked')">
+      <span class="btn-icon">&#9646;</span>
+      <span class="btn-body">
+        <strong>Lock Contention</strong>
+        <small>BLOCKED thread queue</small>
+      </span>
+    </button>
+
+    <button class="scenario-btn deadlock"
+      [class.active]="activeId() === 'deadlock'"
+      (click)="activate('deadlock')">
+      <span class="btn-icon">&#9711;</span>
+      <span class="btn-body">
+        <strong>Deadlock</strong>
+        <small>Circular wait — permanent freeze</small>
+      </span>
+    </button>
+
+  </div>
+
+  <!-- Active scenario panel -->
+  @if (active(); as active) {
+    <div class="scenario-panel" [class]="'panel-' + active.severity">
+      <div class="panel-header">
+        <div>
+          <h2>{{ active.label }}</h2>
+          <p class="tagline">{{ active.tagline }}</p>
+        </div>
+        <button class="close-btn" (click)="activate(active.id)">&#10005;</button>
+      </div>
+      <p class="description">{{ active.description }}</p>
+      <!-- Thread dump -->
+      <div class="dump-section">
+        <div class="dump-toolbar">
+          <span class="dump-label">jstack output</span>
+          <span class="legend">
+            <span class="legend-dot hl-runnable">RUNNABLE</span>
+            <span class="legend-dot hl-blocked">BLOCKED</span>
+            <span class="legend-dot hl-lock-held">locked</span>
+            <span class="legend-dot hl-lock-wait">waiting</span>
+            @if (active.severity === 'deadlock') {
+              <span class="legend-dot hl-deadlock-alert">deadlock</span>
+            }
+          </span>
+        </div>
+        <pre class="dump-pre">@for (line of dumpLines(active.dump); track line) {
+          <span
+            class="dump-line"
+          [ngClass]="line.cls">{{ line.text }}</span>
+        }</pre>
+      </div>
+      <!-- Analysis -->
+      <div class="analysis-grid">
+        <div class="analysis-card">
+          <h3>Symptoms to watch for</h3>
+          <ul>
+            @for (s of active.symptoms; track s) {
+              <li>{{ s }}</li>
+            }
+          </ul>
+        </div>
+        <div class="analysis-card">
+          <h3>How to diagnose</h3>
+          <ol>
+            @for (d of active.diagnosis; track d) {
+              <li>{{ d }}</li>
+            }
+          </ol>
+        </div>
+        <div class="analysis-card">
+          <h3>Remediation options</h3>
+          <ul>
+            @for (f of active.fix; track f) {
+              <li>{{ f }}</li>
+            }
+          </ul>
+        </div>
+        <div class="analysis-card commands-card">
+          <h3>Useful commands</h3>
+          <ul class="cmd-list">
+            @for (c of active.commands; track c) {
+              <li><code>{{ c }}</code></li>
+            }
+          </ul>
+        </div>
+      </div>
+    </div>
+  }
+
+  <!-- Collapsed hint -->
+  @if (!active()) {
+    <div class="hint-box">
+      Select a scenario above to load its thread dump.
+    </div>
+  }
+
+  <!-- Reference panel -->
+  <div class="card ref-panel">
+    <h3>Quick Reference — Thread States</h3>
+    <div class="ref-grid">
+      <div class="ref-item">
+        <span class="state-tag runnable">RUNNABLE</span>
+        <p>Executing on CPU or ready to run. Continuously RUNNABLE with no I/O lines = hot loop.</p>
+      </div>
+      <div class="ref-item">
+        <span class="state-tag blocked">BLOCKED</span>
+        <p>Waiting for a monitor held by another thread. Always paired with a "waiting to lock" line.</p>
+      </div>
+      <div class="ref-item">
+        <span class="state-tag waiting">WAITING</span>
+        <p>Parked until notified (Object.wait, LockSupport.park). Normal for idle threads in a pool.</p>
+      </div>
+      <div class="ref-item">
+        <span class="state-tag timed">TIMED_WAITING</span>
+        <p>Like WAITING but with a timeout. sleep(), join(ms), park(ns) all produce this state.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
